@@ -1,0 +1,25 @@
+1z Wages, salaries, tips, etc.: 85000
+4 Total Interest: 0
+6 Total Ordinary Dividends: 0
+2b Taxable Interest: 0
+3b Ordinary Dividends: 0
+7 Net Short-Term Capital Gain/Loss: 0
+15 Net Long-Term Capital Gain/Loss: 0
+16 Allowable Capital Gain/Loss: 0
+7 Capital Gain/Loss: 0
+8 Other Income from Schedule 1: 0
+9 Total Income: 85000
+10 Adjustments from Schedule 1: 0
+11 Adjusted Gross Income: 85000
+12 Standard Deduction: 30000
+15 Taxable Income: 55000
+16 Tax: 8250
+19 Child Tax Credit / Credit for Other Dependents: 2500
+24 Total Tax: 5750
+25d Federal income tax withheld: 8000
+26 2025 estimated tax payments and amount applied from 2024 return: 0
+33 Total Payments: 8000
+34 Amount Overpaid: 2250
+CTC Line 19 Expected: 2500. Actual: 2500
+Tax Line 16: 8250
+Total Tax Line 24: 5750

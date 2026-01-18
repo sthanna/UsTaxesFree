@@ -1,0 +1,143 @@
+{
+  "taxYear": 2025,
+  "filingStatus": "SINGLE",
+  "lines": [
+    {
+      "id": "1040_1z",
+      "description": "Wages, salaries, tips, etc.",
+      "value": 60000,
+      "form": "1040",
+      "lineNumber": "1z"
+    },
+    {
+      "id": "SchB_4",
+      "description": "Total Interest",
+      "value": 0,
+      "form": "Schedule B",
+      "lineNumber": "4"
+    },
+    {
+      "id": "SchB_6",
+      "description": "Total Ordinary Dividends",
+      "value": 0,
+      "form": "Schedule B",
+      "lineNumber": "6"
+    },
+    {
+      "id": "1040_2b",
+      "description": "Taxable Interest",
+      "value": 0,
+      "form": "1040",
+      "lineNumber": "2b"
+    },
+    {
+      "id": "1040_3b",
+      "description": "Ordinary Dividends",
+      "value": 0,
+      "form": "1040",
+      "lineNumber": "3b"
+    },
+    {
+      "id": "SchD_NetST",
+      "description": "Net Short-Term Capital Gain/Loss",
+      "value": 0,
+      "form": "Schedule D",
+      "lineNumber": "7"
+    },
+    {
+      "id": "SchD_NetLT",
+      "description": "Net Long-Term Capital Gain/Loss",
+      "value": 0,
+      "form": "Schedule D",
+      "lineNumber": "15"
+    },
+    {
+      "id": "SchD_Allowable",
+      "description": "Allowable Capital Gain/Loss",
+      "value": 0,
+      "form": "Schedule D",
+      "lineNumber": "16"
+    },
+    {
+      "id": "1040_7",
+      "description": "Capital Gain/Loss",
+      "value": 0,
+      "form": "1040",
+      "lineNumber": "7"
+    },
+    {
+      "id": "1040_12",
+      "description": "Standard Deduction",
+      "value": 15000,
+      "form": "1040",
+      "lineNumber": "12"
+    },
+    {
+      "id": "1040_15",
+      "description": "Taxable Income",
+      "value": 45000,
+      "form": "1040",
+      "lineNumber": "15"
+    },
+    {
+      "id": "1040_16",
+      "description": "Tax",
+      "value": 6750,
+      "form": "1040",
+      "lineNumber": "16"
+    },
+    {
+      "id": "1040_24",
+      "description": "Total Tax",
+      "value": 6750,
+      "form": "1040",
+      "lineNumber": "24"
+    },
+    {
+      "id": "1040_25d",
+      "description": "Federal income tax withheld",
+      "value": 8000,
+      "form": "1040",
+      "lineNumber": "25d"
+    }
+  ],
+  "refund": 1250,
+  "amountOwed": 0,
+  "stateResult": {
+    "state": "NY",
+    "lines": [
+      {
+        "id": "IT201_fed_agi",
+        "description": "Federal AGI (Simulated)",
+        "value": 60000,
+        "form": "IT-201",
+        "lineNumber": "19"
+      },
+      {
+        "id": "IT201_34",
+        "description": "NY Standard Deduction",
+        "value": 8000,
+        "form": "IT-201",
+        "lineNumber": "34"
+      },
+      {
+        "id": "IT201_37",
+        "description": "NY Taxable Income",
+        "value": 52000,
+        "form": "IT-201",
+        "lineNumber": "37"
+      },
+      {
+        "id": "IT201_39",
+        "description": "NY Tax",
+        "value": 2600,
+        "form": "IT-201",
+        "lineNumber": "39"
+      }
+    ],
+    "amountOwed": 2600,
+    "refund": 0,
+    "totalTax": 2600
+  },
+  "errors": []
+}

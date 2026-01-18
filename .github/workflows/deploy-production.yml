@@ -1,0 +1,93 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  deploy:
+    name: Deploy to Kubernetes
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment || 'production' }}
+      url: https://app.taxfiling.example.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: 'latest'
+
+      - name: Configure kubectl
+        run: |
+          aws eks update-kubeconfig \
+            --name ${{ secrets.EKS_CLUSTER_NAME }} \
+            --region ${{ secrets.AWS_REGION }}
+
+      - name: Deploy backend to Kubernetes
+        run: |
+          kubectl set image deployment/tax-filing-api \
+            tax-filing-app=${{ steps.login-ecr.outputs.registry }}/tax-filing-backend:${{ github.sha }} \
+            -n ${{ github.event.inputs.environment || 'production' }}
+
+          kubectl rollout status deployment/tax-filing-api \
+            -n ${{ github.event.inputs.environment || 'production' }} \
+            --timeout=5m
+
+      - name: Deploy frontend to Kubernetes
+        run: |
+          kubectl set image deployment/tax-filing-frontend \
+            tax-filing-frontend=${{ steps.login-ecr.outputs.registry }}/tax-filing-frontend:${{ github.sha }} \
+            -n ${{ github.event.inputs.environment || 'production' }}
+
+          kubectl rollout status deployment/tax-filing-frontend \
+            -n ${{ github.event.inputs.environment || 'production' }} \
+            --timeout=5m
+
+      - name: Run smoke tests
+        run: |
+          kubectl run smoke-test --rm -i --restart=Never \
+            --image=curlimages/curl:latest \
+            --namespace=${{ github.event.inputs.environment || 'production' }} \
+            -- curl -f http://tax-filing-api:3000/health
+
+      - name: Notify deployment success
+        if: success()
+        run: |
+          echo "Deployment to ${{ github.event.inputs.environment || 'production' }} successful!"
+          # Add Slack/Discord notification here
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          echo "Deployment failed! Rolling back..."
+          kubectl rollout undo deployment/tax-filing-api \
+            -n ${{ github.event.inputs.environment || 'production' }}
+          kubectl rollout undo deployment/tax-filing-frontend \
+            -n ${{ github.event.inputs.environment || 'production' }}

@@ -1,0 +1,71 @@
+services:
+  db:
+    image: postgres:15
+    container_name: tax_db
+    environment:
+      POSTGRES_USER: ${DB_USER:-tax_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password123}
+      POSTGRES_DB: ${DB_NAME:-tax_filing_db}
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-tax_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tax-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tax_backend
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: 3000
+      DATABASE_URL: postgresql://${DB_USER:-tax_user}:${DB_PASSWORD:-password123}@db:5432/${DB_NAME:-tax_filing_db}
+      JWT_SECRET: ${JWT_SECRET:-your_jwt_secret_key_change_in_prod}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8080}
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - tax-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: tax_frontend
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - tax-network
+    restart: unless-stopped
+
+networks:
+  tax-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

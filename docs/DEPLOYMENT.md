@@ -597,9 +597,9 @@ Before deploying to production:
 
 ## Support and Contacts
 
-- **Development Team:** dev@taxfiling.example.com
-- **DevOps/Infrastructure:** devops@taxfiling.example.com
-- **Security Issues:** security@taxfiling.example.com
+- **Development Team:** freeustaxes@gmail.com
+- **DevOps/Infrastructure:** freeustaxes@gmail.com
+- **Security Issues:** freeustaxes@gmail.com
 - **On-call Pager:** +1-XXX-XXX-XXXX
 
 ---

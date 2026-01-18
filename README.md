@@ -241,8 +241,8 @@ ISC
 ## Support
 
 For issues or questions:
-- **Development:** dev@taxfiling.example.com
-- **Security:** security@taxfiling.example.com
+- **Development:** freeustaxes@gmail.com
+- **Security:** freeustaxes@gmail.com
 
 ---
 

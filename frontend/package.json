@@ -2,6 +2,7 @@
   "name": "tax-filing-frontend",
   "private": true,
   "version": "1.0.0",
+  "author": "Sandeep Thanna <freeustaxes@gmail.com>",
   "type": "module",
   "scripts": {
     "dev": "vite",

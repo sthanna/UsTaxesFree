@@ -19,7 +19,7 @@
         "1040",
         "irs"
     ],
-    "author": "",
+    "author": "Sandeep Thanna <freeustaxes@gmail.com>",
     "license": "ISC",
     "dependencies": {
         "@opentelemetry/api": "^1.9.0",
